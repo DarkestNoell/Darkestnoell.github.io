@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container" autocapitalize="words">
+        <div class="row scene">
+            <div class="cube">
+                <!--Front-->
+                <div class="cube-side-front">
+                    <div class="cube-face cube-front tl"></div>
+                    <div class="cube-face cube-front tm"></div>
+                    <div class="cube-face cube-front tr"></div>
+                    <div class="cube-face cube-front ml"></div>
+                    <div class="cube-face cube-front mm"></div>
+                    <div class="cube-face cube-front mr"></div>
+                    <div class="cube-face cube-front bl"></div>
+                    <div class="cube-face cube-front bm"></div>
+                    <div class="cube-face cube-front br"></div>
+                </div>
+                
+                
+                <!-- Left -->
+                <div class="cube-side-left">
+                    <div class="cube-face cube-left tl"></div>
+                    <div class="cube-face cube-left tm"></div>
+                    <div class="cube-face cube-left tr"></div>
+                    <div class="cube-face cube-left ml"></div>
+                    <div class="cube-face cube-left mm"></div>
+                    <div class="cube-face cube-left mr"></div>
+                    <div class="cube-face cube-left bl"></div>
+                    <div class="cube-face cube-left bm"></div>
+                    <div class="cube-face cube-left br"></div>
+                </div>
+                
+                <!-- Right -->
+                <div class="cube-side-right">
+                    <div class="cube-face cube-right tl"></div>
+                    <div class="cube-face cube-right tm"></div>
+                    <div class="cube-face cube-right tr"></div>
+                    <div class="cube-face cube-right ml"></div>
+                    <div class="cube-face cube-right mm"></div>
+                    <div class="cube-face cube-right mr"></div>
+                    <div class="cube-face cube-right bl"></div>
+                    <div class="cube-face cube-right bm"></div>
+                    <div class="cube-face cube-right br"></div>
+                </div>
+                
+                <!-- Back -->
+                <div class="cube-side-back">
+                    <div class="cube-face cube-back tl"></div>
+                    <div class="cube-face cube-back tm"></div>
+                    <div class="cube-face cube-back tr"></div>
+                    <div class="cube-face cube-back ml"></div>
+                    <div class="cube-face cube-back mm"></div>
+                    <div class="cube-face cube-back mr"></div>
+                    <div class="cube-face cube-back bl"></div>
+                    <div class="cube-face cube-back bm"></div>
+                    <div class="cube-face cube-back br"></div>
+                </div>
+                
+                <!-- Top -->
+                <div class="cube-side-top">
+                    <div class="cube-face cube-top tl"></div>
+                    <div class="cube-face cube-top tm"></div>
+                    <div class="cube-face cube-top tr"></div>
+                    <div class="cube-face cube-top ml"></div>
+                    <div class="cube-face cube-top mm"></div>
+                    <div class="cube-face cube-top mr"></div>
+                    <div class="cube-face cube-top bl"></div>
+                    <div class="cube-face cube-top bm"></div>
+                    <div class="cube-face cube-top br"></div>
+                </div>
+                
+                <!-- Bottom -->
+                <div class="cube-side-bottom">
+                    <div class="cube-face cube-bottom tl"></div>
+                    <div class="cube-face cube-bottom tm"></div>
+                    <div class="cube-face cube-bottom tr"></div>
+                    <div class="cube-face cube-bottom ml"></div>
+                    <div class="cube-face cube-bottom mm"></div>
+                    <div class="cube-face cube-bottom mr"></div>
+                    <div class="cube-face cube-bottom bl"></div>
+                    <div class="cube-face cube-bottom bm"></div>
+                    <div class="cube-face cube-bottom br"></div>
+                </div>
+            </div>
+        </div>
+        <div class="rotation-utils">
+            <button type="button" value="Front" onclick="rotateToFront()">Front</button>
+            <button type="button" value="Back" onclick="rotateToBack()">Back</button>
+            <button type="button" value="Top" onclick="rotateToTop()">Top</button>
+            <button type="button" value="Bottom" onclick="rotateToBottom()">Bottom</button>
+            <button type="button" value="Left" onclick="rotateToLeft()">Left</button>
+            <button type="button" value="Right" onclick="rotateToRight()">Right</button>
+            
+        </div>
+    </div>  
+</body>
+</html>
+
+<style>
+    .scene{
+        width: 300px;
+        height: 380px;
+        perspective: 600px;
+        margin-top: 300px;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .cube{
+        position: relative;
+        width: 200px;
+        height: 200px;
+        transform-style: preserve-3d;
+        transform: translateZ(-100px);
+        transition: transform 1s;
+    }
+    
+    [class^="cube-side"] {
+        position: absolute; 
+        height: 100%;
+        width: 100%;
+    }
+    
+    .cube-face{
+        position: absolute; 
+        height: 33%;
+        width: 33%;
+    }
+    
+    .cube-front{
+        background-color: blue;
+    }
+    
+    .cube-left{
+        background-color: red;
+    }
+    
+    .cube-top{
+        background-color: pink;
+    }
+    
+    .tm,
+    .mm,
+    .bm{
+        right: 0;
+        left: 0;
+        margin-left: auto; 
+        margin-right: auto;
+    }
+    .ml,
+    .mm,
+    .mr{
+        top: 0;
+        bottom: 0;
+        margin-top: auto;
+        margin-bottom: auto; 
+    }
+    .bl,
+    .br,
+    .bm{
+        bottom: 0;
+    }
+    
+    .tr,
+    .mr,
+    .br{
+        right: 0;   
+    }
+    
+    .cube-left   { 
+        transform: translateZ(100px); 
+        background-color: red;
+    }
+    
+    .cube-right {
+        transform: translateZ(100px);
+        background-color: yellow;
+    }
+    
+    .cube-back{
+        transform: translateZ(100px);
+        background-color: green;
+    }
+    
+    .cube-bottom{
+        background-color: purple;
+    }
+    
+    .cube-side-right{
+       transform: rotateY(270deg) translateZ(-100px) translateX(-100px);
+    }
+    
+    .cube-side-back{
+        transform: rotateY(0deg) translateZ(-200px);
+    }
+    
+    .cube-side-top{
+        transform: translateZ(-100px) translateY(-100px) rotateX(90deg);
+    }
+
+    .cube-side-left{
+       transform: rotateY(90deg) translateX(102px) translateZ(-100px);
+    }
+    
+    .cube-side-bottom{
+        transform: rotateX(90deg) translateZ(-100px) translateY(-100px);
+    }
+    
+    /*UTILITY FOR ROTATING CUBE*/
+    
+    @keyframes cube{
+        100%{
+            -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        transform: rotate(360deg)
+        }
+    }
+</style>
+
+<script>
+    let cube = $(".cube");
+    
+    function rotateToFront()
+    {
+        console.log('ok');
+        $(cube).css({
+                "transform": "rotateY(0deg)" 
+        });
+    }
+    
+    function rotateToBack()
+    {
+        $(cube).css({
+                "transform": "rotateY(180deg)" 
+        });
+    }
+    
+    function rotateToTop()
+    {
+         $(cube).css({
+                "transform": "rotateX(90deg)" 
+        });
+    }
+    
+    function rotateToBottom()
+    {
+        $(cube).css({
+                "transform": "rotateX(270deg)" 
+        }); 
+    }
+    
+    function rotateToLeft()
+    {
+        $(cube).css({
+                "transform": "rotateY(90deg)" 
+        });
+    }
+    
+    function rotateToRight()
+    {
+        $(cube).css({
+                "transform": "rotateY(270deg)" 
+        });
+    }
+</script>
