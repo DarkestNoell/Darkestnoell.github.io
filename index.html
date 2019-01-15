@@ -311,7 +311,77 @@
         if(selectedPosition == "tm" || selectedPosition == "mm" || selectedPosition == "bm")
         {
             turnUpMiddle();
+        }else if(selectedPosition == "tr" || selectedPosition == "mr" || selectedPosition == "br")
+        {
+                turnUpRight();
         }
+    }
+    
+    function turnUpRight()
+    {
+            var frontRight = [$(cube).find(".cube-side-front .tr"), $(cube).find(".cube-side-front .mr"), $(cube).find(".cube-side-front .br")];
+            var topRight = [$(cube).find(".cube-side-top .tr"), $(cube).find(".cube-side-top .mr"), $(cube).find(".cube-side-top .br")];
+            var backLeft = [$(cube).find(".cube-side-back .tl"), $(cube).find(".cube-side-back .ml"), $(cube).find(".cube-side-back .bl")];
+            var bottomRight = [$(cube).find(".cube-side-bottom .tr"), $(cube).find(".cube-side-bottom .mr"), $(cube).find(".cube-side-bottom .br")];
+            var allRight = $(cube).find(".cube-side-right .cube-face");
+        
+            if(currSide == "front" || currSide == "top" || currSide == "bottom")
+            {
+                    for(i = 0; i < 3; i++)
+                    {
+                            var col1 = $(frontRight[i]).css("background-color");
+                            var col2 = $(topRight[i]).css("background-color");
+                            var col3 = $(bottomRight[i]).css("background-color");
+                            var col4 = $(backLeft[i]).css("background-color");
+                        
+                            $(frontRight[i]).css({
+                                "background-color": col3
+                            });
+                        
+                            $(topRight[i]).css({
+                                 "background-color": col1
+                            });
+                        
+                            $(backLeft[i]).css({
+                                "background-color": col2
+                            });
+
+                            $(bottomRight[i]).css({
+                                 "background-color": col4
+                            });
+                    }  
+                
+                var colorsForRotation = [];
+                for(var i = 0; i < 9; i++)
+                {
+                    colorsForRotation[i] = $(allRight[i]).css("background-color");
+                }
+                
+                for(var i = 0; i < allRight.length; i++)
+                {
+                    if(i % 2 == 0){
+                                                
+                        if(i == 8){
+                                $(allRight[i]).css("background-color", colorsForRotation[2]);
+                        }else if(i == 6)
+                        {
+                                $(allRight[i]).css("background-color", colorsForRotation[8]);
+                        }else if(i == 2)
+                        {
+                                $(allRight[i]).css("background-color", colorsForRotation[0]);
+                        }else if(i == 0)
+                        {
+                            $(allRight[i]).css("background-color", colorsForRotation[6]);
+                        }
+                    }else if(i % 2 != 0){
+                        if(i+4 > 8){ 
+                            $(allRight[i]).css("background-color", colorsForRotation[i-4]);
+                        }else{
+                            $(allRight[i]).css("background-color", colorsForRotation[i+4]);
+                        }
+                    }
+                }
+           }
     }
     
     function turnDown()
@@ -320,9 +390,7 @@
         {
             turnDownMiddle();
         }
-    }
-    
-    
+    }   
     
     function turnUpMiddle()
     {
@@ -425,7 +493,7 @@
             {
                     topMiddle = [$(cube).find(".cube-side-top .ml"), $(cube).find(".cube-side-top .mm"), $(cube).find(".cube-side-top .mr")];
                     bottomMiddle = [$(cube).find(".cube-side-bottom .ml"), $(cube).find(".cube-side-bottom .mm"), $(cube).find(".cube-side-bottom .mr")];
-                for(i = 0; i < 3; i++)
+                    for(i = 0; i < 3; i++)
                     {
                             var col1 = $(leftMiddle[i]).css("background-color");
                             var col2 = $(topMiddle[i]).css("background-color");
