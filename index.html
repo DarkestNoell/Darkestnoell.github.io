@@ -330,7 +330,9 @@
             var topMiddle = [$(cube).find(".cube-side-top .tm"), $(cube).find(".cube-side-top .mm"), $(cube).find(".cube-side-top .bm")];
             var backMiddle = [$(cube).find(".cube-side-back .tm"), $(cube).find(".cube-side-back .mm"), $(cube).find(".cube-side-back .bm")];
             var bottomMiddle = [$(cube).find(".cube-side-bottom .tm"), $(cube).find(".cube-side-bottom .mm"), $(cube).find(".cube-side-bottom .bm")];
-            if(currSide == "front")
+            var leftMiddle = [$(cube).find(".cube-side-left .tm"), $(cube).find(".cube-side-left .mm"), $(cube).find(".cube-side-left .bm")];
+            var rightMiddle = [$(cube).find(".cube-side-right .tm"), $(cube).find(".cube-side-right .mm"), $(cube).find(".cube-side-right .bm")];
+            if(currSide == "front" || currSide == "top" || currSide == "bottom" || currSide == "back")
             {
                     for(i = 0; i < 3; i++)
                     {
@@ -355,16 +357,46 @@
                                 "background-color": col4
                             });
                     }
+            }else if(currSide == "left" || currSide == "right")
+            {
+                topMiddle = [$(cube).find(".cube-side-top .ml"), $(cube).find(".cube-side-top .mm"), $(cube).find(".cube-side-top .mr")];
+                bottomMiddle = [$(cube).find(".cube-side-bottom .ml"), $(cube).find(".cube-side-bottom .mm"), $(cube).find(".cube-side-bottom .mr")];
+                
+                for(i = 0; i < 3; i++)
+                    {
+                            var col1 = $(leftMiddle[i]).css("background-color");
+                            var col2 = $(topMiddle[i]).css("background-color");
+                            var col3 = $(rightMiddle[i]).css("background-color");
+                            var col4 = $(bottomMiddle[i]).css("background-color");
+  
+                            $(topMiddle[i]).css({
+                                 "background-color": col1
+                            });
+
+                            $(leftMiddle[i]).css({
+                                "background-color": col4
+                            });
+
+                            $(bottomMiddle[i]).css({
+                                 "background-color": col3
+                            });
+                        
+                            $(rightMiddle[i]).css({
+                                "background-color": col2
+                            });
+                    }
             }
     }
     
     function turnDownMiddle()
     {
-        var frontMiddle = [$(cube).find(".cube-side-front .tm"), $(cube).find(".cube-side-front .mm"), $(cube).find(".cube-side-front .bm")];
+            var frontMiddle = [$(cube).find(".cube-side-front .tm"), $(cube).find(".cube-side-front .mm"), $(cube).find(".cube-side-front .bm")];
             var topMiddle = [$(cube).find(".cube-side-top .tm"), $(cube).find(".cube-side-top .mm"), $(cube).find(".cube-side-top .bm")];
             var backMiddle = [$(cube).find(".cube-side-back .tm"), $(cube).find(".cube-side-back .mm"), $(cube).find(".cube-side-back .bm")];
             var bottomMiddle = [$(cube).find(".cube-side-bottom .tm"), $(cube).find(".cube-side-bottom .mm"), $(cube).find(".cube-side-bottom .bm")];
-            if(currSide == "front")
+            var leftMiddle = [$(cube).find(".cube-side-left .tm"), $(cube).find(".cube-side-left .mm"), $(cube).find(".cube-side-left .bm")];
+            var rightMiddle = [$(cube).find(".cube-side-right .tm"), $(cube).find(".cube-side-right .mm"), $(cube).find(".cube-side-right .bm")];
+            if(currSide == "front" || currSide == "top" || currSide == "bottom" || currSide == "back")
             {
                     for(i = 0; i < 3; i++)
                     {
@@ -387,6 +419,33 @@
                         
                             $(frontMiddle[i]).css({
                                 "background-color": col2
+                            });
+                    }
+            }else if(currSide == "left" || currSide == "right")
+            {
+                    topMiddle = [$(cube).find(".cube-side-top .ml"), $(cube).find(".cube-side-top .mm"), $(cube).find(".cube-side-top .mr")];
+                    bottomMiddle = [$(cube).find(".cube-side-bottom .ml"), $(cube).find(".cube-side-bottom .mm"), $(cube).find(".cube-side-bottom .mr")];
+                for(i = 0; i < 3; i++)
+                    {
+                            var col1 = $(leftMiddle[i]).css("background-color");
+                            var col2 = $(topMiddle[i]).css("background-color");
+                            var col3 = $(rightMiddle[i]).css("background-color");
+                            var col4 = $(bottomMiddle[i]).css("background-color");
+  
+                            $(topMiddle[i]).css({
+                                 "background-color": col3
+                            });
+
+                            $(leftMiddle[i]).css({
+                                "background-color": col2
+                            });
+
+                            $(bottomMiddle[i]).css({
+                                 "background-color": col1
+                            });
+                        
+                            $(rightMiddle[i]).css({
+                                "background-color": col4
                             });
                     }
             }
