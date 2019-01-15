@@ -79,26 +79,30 @@
                 
                 <!-- Bottom -->
                 <div class="cube-side-bottom">
+                    <div class="cube-face cube-bottom bl"></div>
+                    <div class="cube-face cube-bottom bm"></div>
+                    <div class="cube-face cube-bottom br"></div>
                     <div class="cube-face cube-bottom tl"></div>
                     <div class="cube-face cube-bottom tm"></div>
                     <div class="cube-face cube-bottom tr"></div>
                     <div class="cube-face cube-bottom ml"></div>
                     <div class="cube-face cube-bottom mm"></div>
                     <div class="cube-face cube-bottom mr"></div>
-                    <div class="cube-face cube-bottom bl"></div>
-                    <div class="cube-face cube-bottom bm"></div>
-                    <div class="cube-face cube-bottom br"></div>
+                    
                 </div>
             </div>
         </div>
         <div class="rotation-utils">
             <button type="button" value="Front" onclick="rotateToFront()">Front</button>
             <button type="button" value="Back" onclick="rotateToBack()">Back</button>
-            <button type="button" value="Top" onclick="rotateToTop()">Top</button>
-            <button type="button" value="Bottom" onclick="rotateToBottom()">Bottom</button>
             <button type="button" value="Left" onclick="rotateToLeft()">Left</button>
             <button type="button" value="Right" onclick="rotateToRight()">Right</button>
-            
+            <button type="button" value="Top" onclick="rotateToTop()">Top</button>
+            <button type="button" value="Bottom" onclick="rotateToBottom()">Bottom</button>
+        </div>
+        <div class="twist-utils">
+            <button type="button" value="twist up" onclick="turnUp()">Twist Up</button>
+            <button type="button" value="twist down" onclick="turnDown()">Twist Down</button>
         </div>
     </div>  
 </body>
@@ -197,11 +201,11 @@
     }
     
     .cube-side-right{
-       transform: rotateY(270deg) translateZ(-100px) translateX(-100px);
+       transform: rotateY(90deg) translateZ(100px) translateX(100px);
     }
     
     .cube-side-back{
-        transform: rotateY(0deg) translateZ(-200px);
+        transform: rotateY(180deg) translateZ(200px);
     }
     
     .cube-side-top{
@@ -209,11 +213,11 @@
     }
 
     .cube-side-left{
-       transform: rotateY(90deg) translateX(102px) translateZ(-100px);
+       transform: rotateY(270deg) translateX(-100px) translateZ(100px);
     }
     
     .cube-side-bottom{
-        transform: rotateX(90deg) translateZ(-100px) translateY(-100px);
+        transform: rotateX(90deg) translateZ(-100px) translateY(-100px) rotateY(180deg) rotateZ(180deg);
     }
     
     /*UTILITY FOR ROTATING CUBE*/
@@ -229,13 +233,36 @@
 
 <script>
     let cube = $(".cube");
+    let face = $(".cube-face");
+    var sides = ["front", "back", "left", "right", "top", "bottom"];
+    var currSide = sides[0];
+    var selectedPosition = "";
+    var defaultColors = ["blue", "green", "red", "yellow", "pink", "purple"];
+    
+    var frontFaces = $(cube).find("cube-face.cube-front");
+        
+    for(var i = 0; i < face.length; i++)
+    {
+       $(face[i]).click(function() {
+           console.log($(this).css("background-color"));
+            if(this.classList.contains("tl")){selectedPosition = "tl";}
+            else if(this.classList.contains("tm")){selectedPosition = "tm";}
+            else if(this.classList.contains("tr")){selectedPosition = "tr";}
+            else if(this.classList.contains("ml")){selectedPosition = "ml"}
+            else if(this.classList.contains("mm")){selectedPosition = "mm";}
+            else if(this.classList.contains("mr")){selectedPosition = "mr";}
+            else if(this.classList.contains("bl")){selectedPosition = "bl";}
+            else if(this.classList.contains("bm")){selectedPosition = "bm";}
+            else if(this.classList.contains("br")){selectedPosition = "br";}
+        });
+    }
     
     function rotateToFront()
     {
-        console.log('ok');
         $(cube).css({
                 "transform": "rotateY(0deg)" 
         });
+        currSide = sides[0];
     }
     
     function rotateToBack()
@@ -243,20 +270,7 @@
         $(cube).css({
                 "transform": "rotateY(180deg)" 
         });
-    }
-    
-    function rotateToTop()
-    {
-         $(cube).css({
-                "transform": "rotateX(90deg)" 
-        });
-    }
-    
-    function rotateToBottom()
-    {
-        $(cube).css({
-                "transform": "rotateX(270deg)" 
-        }); 
+        currSide = sides[1];
     }
     
     function rotateToLeft()
@@ -264,6 +278,7 @@
         $(cube).css({
                 "transform": "rotateY(90deg)" 
         });
+        currSide = sides[2];
     }
     
     function rotateToRight()
@@ -271,5 +286,111 @@
         $(cube).css({
                 "transform": "rotateY(270deg)" 
         });
+        currSide = sides[3];
     }
+    
+    function rotateToTop()
+    {
+         $(cube).css({
+                "transform": "rotateX(270deg)" 
+        });
+        currSide = sides[4];
+    }
+    
+    function rotateToBottom()
+    {
+        $(cube).css({
+                "transform": "rotateX(90deg)" 
+        }); 
+        currSide = sides[5];
+    }
+
+    
+    function turnUp()
+    {
+        if(selectedPosition == "tm" || selectedPosition == "mm" || selectedPosition == "bm")
+        {
+            turnUpMiddle();
+        }
+    }
+    
+    function turnDown()
+    {
+        if(selectedPosition == "tm" || selectedPosition == "mm" || selectedPosition == "bm")
+        {
+            turnDownMiddle();
+        }
+    }
+    
+    
+    
+    function turnUpMiddle()
+    {
+            var frontMiddle = [$(cube).find(".cube-side-front .tm"), $(cube).find(".cube-side-front .mm"), $(cube).find(".cube-side-front .bm")];
+            var topMiddle = [$(cube).find(".cube-side-top .tm"), $(cube).find(".cube-side-top .mm"), $(cube).find(".cube-side-top .bm")];
+            var backMiddle = [$(cube).find(".cube-side-back .tm"), $(cube).find(".cube-side-back .mm"), $(cube).find(".cube-side-back .bm")];
+            var bottomMiddle = [$(cube).find(".cube-side-bottom .tm"), $(cube).find(".cube-side-bottom .mm"), $(cube).find(".cube-side-bottom .bm")];
+            if(currSide == "front")
+            {
+                    for(i = 0; i < 3; i++)
+                    {
+                            var col1 = $(frontMiddle[i]).css("background-color");
+                            var col2 = $(topMiddle[i]).css("background-color");
+                            var col3 = $(backMiddle[i]).css("background-color");
+                            var col4 = $(bottomMiddle[i]).css("background-color");
+  
+                            $(topMiddle[i]).css({
+                                 "background-color": col1
+                            });
+
+                            $(backMiddle[i]).css({
+                                "background-color": col2
+                            });
+
+                            $(bottomMiddle[i]).css({
+                                 "background-color": col3
+                            });
+                        
+                            $(frontMiddle[i]).css({
+                                "background-color": col4
+                            });
+                    }
+            }
+    }
+    
+    function turnDownMiddle()
+    {
+        var frontMiddle = [$(cube).find(".cube-side-front .tm"), $(cube).find(".cube-side-front .mm"), $(cube).find(".cube-side-front .bm")];
+            var topMiddle = [$(cube).find(".cube-side-top .tm"), $(cube).find(".cube-side-top .mm"), $(cube).find(".cube-side-top .bm")];
+            var backMiddle = [$(cube).find(".cube-side-back .tm"), $(cube).find(".cube-side-back .mm"), $(cube).find(".cube-side-back .bm")];
+            var bottomMiddle = [$(cube).find(".cube-side-bottom .tm"), $(cube).find(".cube-side-bottom .mm"), $(cube).find(".cube-side-bottom .bm")];
+            if(currSide == "front")
+            {
+                    for(i = 0; i < 3; i++)
+                    {
+                            var col1 = $(frontMiddle[i]).css("background-color");
+                            var col2 = $(topMiddle[i]).css("background-color");
+                            var col3 = $(backMiddle[i]).css("background-color");
+                            var col4 = $(bottomMiddle[i]).css("background-color");
+  
+                            $(topMiddle[i]).css({
+                                 "background-color": col3
+                            });
+
+                            $(backMiddle[i]).css({
+                                "background-color": col4
+                            });
+
+                            $(bottomMiddle[i]).css({
+                                 "background-color": col1
+                            });
+                        
+                            $(frontMiddle[i]).css({
+                                "background-color": col2
+                            });
+                    }
+            }
+    }
+    
+    
 </script>
