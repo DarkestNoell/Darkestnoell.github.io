@@ -133,15 +133,28 @@
                 <label for="bottomColor">Bottom</label>
             </div>
         </div>
+        <div class="rotation-sliders">
+            <div class="slidecontainer">
+                <label for="myRange">Adjust X</label>
+                <input type="range" min="1" max="360" value="0" class="slider" id="myRange" onchange="adjustX(this)">
+                <label for="myRange">Adjust Y</label>
+                <input type="range" min="1" max="360" value="0" class="slider" id="myRange" onchange="adjustY(this)">
+            </div>
+        </div>
     </div>
 </body>
 </html>
 
 <style>
+
+    .container{
+        width: 100vw;
+    }
+
     .scene {
         width: 300px;
         height: 380px;
-        perspective: 600px;
+        perspective: 3000px;
         margin-top: 300px;
         margin-left: auto;
         margin-right: auto;
@@ -154,8 +167,10 @@
         width: 200px;
         height: 200px;
         transform-style: preserve-3d;
-        transform: translateZ(-100px);
+        transform: translateZ(-100px) rotateY(30deg);
         transition: transform 1s;
+        -webkit-transform-style: preserve-3d;
+        -webkit-backface-visibility: hidden;
     }
 
     [class^="cube-side"] {
@@ -163,6 +178,7 @@
         height: 100%;
         width: 100%;
     }
+
 
     .cube-face {
         position: absolute;
@@ -2053,5 +2069,19 @@
 
         alert("Cube is completed!");
         return true;
+    }
+
+    function adjustX(ele)
+    {
+        $(cube).css({
+            'transform': 'rotateX(' + ele.value + "deg)"
+        });
+    }
+
+    function adjustY(ele)
+    {
+        $(cube).css({
+            'transform': 'rotateY(' + ele.value + "deg)"
+        });
     }
 </script>
