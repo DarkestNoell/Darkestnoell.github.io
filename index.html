@@ -103,6 +103,8 @@
         <div class="twist-utils">
             <button type="button" value="twist up" onclick="turnUp()">Twist Up</button>
             <button type="button" value="twist down" onclick="turnDown()">Twist Down</button>
+            <button type="button" value="twist left" onclick="turnLeft()">Twist Left</button>
+            <button type="button" value="twist right" onclick="turnRight()">Twist Right</button>
         </div>
     </div>  
 </body>
@@ -311,17 +313,28 @@
         if(selectedPosition == "tm" || selectedPosition == "mm" || selectedPosition == "bm")
         {
             turnUpMiddle();
-        }else if(((selectedPosition == "tr" || selectedPosition == "mr" || selectedPosition == "br") && currSide != "left") || (currSide == "back" && (selectedPosition == "tl" || selectedPosition == "ml" || selectedPosition == "bl")) && currSide != "left")
+        }else if((selectedPosition == "tr" || selectedPosition == "mr" || selectedPosition == "br") && currSide == "right")
+        {
+            turnUpRightSideRightCol();
+        }else if(((selectedPosition == "tr" || selectedPosition == "mr" || selectedPosition == "br") && currSide != "left") || (currSide == "back" && (selectedPosition == "tl" || selectedPosition == "ml" || selectedPosition == "bl")))
         {
                 turnUpRight();
-        }else if((selectedPosition == "bl" || selectedPosition == "ml" || selectedPosition == "tl" )|| (currSide == "back" && (selectedPosition == "br" || selectedPosition == "mr" || selectedPosition == "tr")))
-        {
-                turnUpLeft();
-        }else if((selectedPosition == "tr" || selectedPosition == "mr" || selectedPosition == "br") && currSide == "left")
+        }else if(currSide == "front" && (selectedPosition == "tl" || selectedPosition == "ml" || selectedPosition == "bl"))
+         {
+            turnUpLeft();
+         }  
+        else if((selectedPosition == "tr" || selectedPosition == "mr" || selectedPosition == "br") && currSide == "left")
         {
             turnUpLeftSideRightCol();
+        }else if((selectedPosition == "bl" || selectedPosition == "ml" || selectedPosition == "tl") && currSide == "left")
+        {
+            turnUpLeftSideLeftCol();
+        }else if((selectedPosition == "bl" || selectedPosition == "ml" || selectedPosition == "tl") && currSide == "right")
+        {
+            turnUpRightSideLeftCol();
         }
     }
+    
     
     function turnUpRight()
     {
@@ -557,42 +570,6 @@
                                  "background-color": col4
                             });
                     }  
-                
-                var colorsForRotation = [];
-                for(var i = 0; i < 9; i++)
-                {
-                    colorsForRotation[i] = $(allLeft[i]).css("background-color");
-                }
-                
-                for(var i = 0; i < allLeft.length; i++)
-                {
-                    if(i % 2 == 0){
-                                                
-                        if(i == 8){
-                                $(allLeft[i]).css("background-color", colorsForRotation[6]);
-                        }else if(i == 6)
-                        {
-                                $(allLeft[i]).css("background-color", colorsForRotation[0]);
-                        }else if(i == 2)
-                        {
-                                $(allLeft[i]).css("background-color", colorsForRotation[8]);
-                        }else if(i == 0)
-                        {
-                            $(allLeft[i]).css("background-color", colorsForRotation[2]);
-                        }
-                    }else if(i % 2 != 0){
-                        if(i == 1){
-                            $(allLeft[i]).css("background-color", colorsForRotation[5]);
-                        }else if(i == 3){
-                             $(allLeft[i]).css("background-color", colorsForRotation[1]);
-                        }else if(i == 5){
-                            $(allLeft[i]).css("background-color", colorsForRotation[7]);
-                        }else if(i == 7)
-                        {
-                            $(allLeft[i]).css("background-color", colorsForRotation[3]);
-                        }
-                    }
-                }
            }
     }
     
@@ -876,6 +853,9 @@
         if((selectedPosition == "tr" || selectedPosition == "mr" || selectedPosition =="br") && currSide == "left")
         {
             turnDownLeftSideRightCol();
+        }else if((selectedPosition == "tr" || selectedPosition == "mr" || selectedPosition == "br") && currSide == "right")
+        {
+            turnDownRightSideRightCol();
         }
         else if(selectedPosition == "tm" || selectedPosition == "mm" || selectedPosition == "bm")
         {
@@ -883,9 +863,15 @@
         }else if(((selectedPosition == "br" || selectedPosition == "mr" || selectedPosition == "tr") && currSide != "back") || ((selectedPosition == "bl" || selectedPosition == "ml" || selectedPosition == "tl") && currSide =="back"))
         {
             turnDownRight();
-        }else if((selectedPosition == "bl" || selectedPosition == "ml" || selectedPosition == "tl") || ((selectedPosition == "tr" || selectedPosition == "mr" || selectedPosition == "br") && currSide =="back"))
+        }else if((selectedPosition == "bl" || selectedPosition == "ml" || selectedPosition == "tl") && currSide == "back" || ((selectedPosition == "tr" || selectedPosition == "mr" || selectedPosition == "br") && currSide =="back"))
         {
             turnDownLeft();
+        }else if((selectedPosition == "tl" || selectedPosition == "ml" || selectedPosition == "bl") && currSide == "left")
+        {
+            turnDownLeftSideLeftCol();
+        }else if((selectedPosition == "bl" || selectedPosition == "ml" || selectedPosition == "tl") && currSide =="right")
+        {
+            turnDownRightSideLeftCol();
         }
     }   
     
@@ -977,6 +963,108 @@
                                 "background-color": col2
                             });
                     }
+            }
+    }
+    
+    function turnRightTopMid()
+    {
+            var frontMiddle = [$(cube).find(".cube-side-front .tm"), $(cube).find(".cube-side-front .mm"), $(cube).find(".cube-side-front .bm")];
+            var topMiddle = [$(cube).find(".cube-side-top .ml"), $(cube).find(".cube-side-top .mm"), $(cube).find(".cube-side-top .mr")];
+            var backMiddle = [$(cube).find(".cube-side-back .tm"), $(cube).find(".cube-side-back .mm"), $(cube).find(".cube-side-back .bm")];
+            var bottomMiddle = [$(cube).find(".cube-side-bottom .ml"), $(cube).find(".cube-side-bottom .mm"), $(cube).find(".cube-side-bottom .mr")];
+            var leftMiddle = [$(cube).find(".cube-side-left .tm"), $(cube).find(".cube-side-left .mm"), $(cube).find(".cube-side-left .bm")];
+            var rightMiddle = [$(cube).find(".cube-side-right .tm"), $(cube).find(".cube-side-right .mm"), $(cube).find(".cube-side-right .bm")];
+
+            for(i = 0; i < 3; i++)
+            {
+                    var col1 = $(leftMiddle[i]).css("background-color");
+                    var col2 = $(topMiddle[i]).css("background-color");
+                    var col3 = $(rightMiddle[i]).css("background-color");
+                    var col4 = $(bottomMiddle[i]).css("background-color");
+
+                    $(topMiddle[i]).css({
+                         "background-color": col1
+                    });
+
+                    $(leftMiddle[i]).css({
+                        "background-color": col4
+                    });
+
+                    $(bottomMiddle[i]).css({
+                         "background-color": col3
+                    });
+
+                    $(rightMiddle[i]).css({
+                        "background-color": col2
+                    });
+            }
+    }
+    
+    function turnRightBottomMid()
+    {
+            var frontMiddle = [$(cube).find(".cube-side-front .tm"), $(cube).find(".cube-side-front .mm"), $(cube).find(".cube-side-front .bm")];
+            var topMiddle = [$(cube).find(".cube-side-top .ml"), $(cube).find(".cube-side-top .mm"), $(cube).find(".cube-side-top .mr")];
+            var backMiddle = [$(cube).find(".cube-side-back .tm"), $(cube).find(".cube-side-back .mm"), $(cube).find(".cube-side-back .bm")];
+            var bottomMiddle = [$(cube).find(".cube-side-bottom .ml"), $(cube).find(".cube-side-bottom .mm"), $(cube).find(".cube-side-bottom .mr")];
+            var leftMiddle = [$(cube).find(".cube-side-left .tm"), $(cube).find(".cube-side-left .mm"), $(cube).find(".cube-side-left .bm")];
+            var rightMiddle = [$(cube).find(".cube-side-right .tm"), $(cube).find(".cube-side-right .mm"), $(cube).find(".cube-side-right .bm")];
+
+            for(i = 0; i < 3; i++)
+            {
+                    var col1 = $(leftMiddle[i]).css("background-color");
+                    var col2 = $(topMiddle[i]).css("background-color");
+                    var col3 = $(rightMiddle[i]).css("background-color");
+                    var col4 = $(bottomMiddle[i]).css("background-color");
+
+                    $(topMiddle[i]).css({
+                         "background-color": col3
+                    });
+
+                    $(leftMiddle[i]).css({
+                        "background-color": col2
+                    });
+
+                    $(bottomMiddle[i]).css({
+                         "background-color": col1
+                    });
+
+                    $(rightMiddle[i]).css({
+                        "background-color": col4
+                    });
+            }
+    }
+    
+    function turnLeftBottomMid()
+    {
+            var frontMiddle = [$(cube).find(".cube-side-front .tm"), $(cube).find(".cube-side-front .mm"), $(cube).find(".cube-side-front .bm")];
+            var topMiddle = [$(cube).find(".cube-side-top .ml"), $(cube).find(".cube-side-top .mm"), $(cube).find(".cube-side-top .mr")];
+            var backMiddle = [$(cube).find(".cube-side-back .tm"), $(cube).find(".cube-side-back .mm"), $(cube).find(".cube-side-back .bm")];
+            var bottomMiddle = [$(cube).find(".cube-side-bottom .ml"), $(cube).find(".cube-side-bottom .mm"), $(cube).find(".cube-side-bottom .mr")];
+            var leftMiddle = [$(cube).find(".cube-side-left .tm"), $(cube).find(".cube-side-left .mm"), $(cube).find(".cube-side-left .bm")];
+            var rightMiddle = [$(cube).find(".cube-side-right .tm"), $(cube).find(".cube-side-right .mm"), $(cube).find(".cube-side-right .bm")];
+
+            for(i = 0; i < 3; i++)
+            {
+                    var col1 = $(leftMiddle[i]).css("background-color");
+                    var col2 = $(topMiddle[i]).css("background-color");
+                    var col3 = $(rightMiddle[i]).css("background-color");
+                    var col4 = $(bottomMiddle[i]).css("background-color");
+
+                    $(topMiddle[i]).css({
+                         "background-color": col1
+                    });
+
+                    $(leftMiddle[i]).css({
+                        "background-color": col4
+                    });
+
+                    $(bottomMiddle[i]).css({
+                         "background-color": col3
+                    });
+
+                    $(rightMiddle[i]).css({
+                        "background-color": col2
+                    });
             }
     }
     
@@ -1212,7 +1300,149 @@
                 }
     }
     
+    function turnDownLeftSideLeftCol()
+    {
+            var allBack = [$(cube).find(".cube-side-back .cube-face")];
+            var topTop = [$(cube).find(".cube-side-top .tl"), $(cube).find(".cube-side-top .tm"), $(cube).find(".cube-side-top .tr")];
+            var rightRight = [$(cube).find(".cube-side-right .tr"), $(cube).find(".cube-side-right .mr"), $(cube).find(".cube-side-right .br")];
+            var bottomBottom = [$(cube).find(".cube-side-bottom .bl"), $(cube).find(".cube-side-bottom .bm"), $(cube).find(".cube-side-bottom .br")];
+            var leftLeft = [$(cube).find(".cube-side-left .tl"), $(cube).find(".cube-side-left .ml"), $(cube).find(".cube-side-left .bl")];
+
+                for(i = 0; i < 3; i++)
+                {
+                        var col1 = $(leftLeft[i]).css("background-color");
+                        var col2 = $(topTop[i]).css("background-color");
+                        var col3 = $(rightRight[i]).css("background-color");
+                        var col4 = $(bottomBottom[i]).css("background-color");
+
+                        $(topTop[i]).css({
+                             "background-color": col3
+                        });
+
+                        $(bottomBottom[i]).css({
+                            "background-color": col1
+                        });
+
+                        $(rightRight[i]).css({
+                             "background-color": col4
+                        });
+
+                        $(leftLeft[i]).css({
+                            "background-color": col2
+                        });
+                }
+        
+                var colorsForRotation = [];
+                for(var i = 0; i < 9; i++)
+                {
+                    colorsForRotation[i] = $(allBack[i]).css("background-color");
+                }
+                
+                for(var i = 0; i < allBack.length; i++)
+                {
+                    if(i % 2 == 0){
+                                                
+                        if(i == 8){
+                                $(allBack[i]).css("background-color", colorsForRotation[2]);
+                        }else if(i == 6)
+                        {
+                                $(allBack[i]).css("background-color", colorsForRotation[8]);
+                        }else if(i == 2)
+                        {
+                                $(allBack[i]).css("background-color", colorsForRotation[0]);
+                        }else if(i == 0)
+                        {
+                            $(allBack[i]).css("background-color", colorsForRotation[6]);
+                        }
+                    }else if(i % 2 != 0){
+                        if(i == 1){ 
+                            $(allBack[i]).css("background-color", colorsForRotation[3]);
+                        }else if(i == 3)
+                        {
+                            $(allBack[i]).css("background-color", colorsForRotation[7]);
+                        }else if(i == 5)
+                        {
+                            $(allBack[i]).css("background-color", colorsForRotation[1]);
+                        }else if(i == 7)
+                        {
+                            $(allFront[i]).css("background-color", colorsForRotation[5]);
+                        }
+                    }
+                }
+    }
+    
     function turnUpLeftSideLeftCol()
+    {
+            var allBack = [$(cube).find(".cube-side-back .cube-face")];
+            var topTop = [$(cube).find(".cube-side-top .tl"), $(cube).find(".cube-side-top .tm"), $(cube).find(".cube-side-top .tr")];
+            var rightRight = [$(cube).find(".cube-side-right .tr"), $(cube).find(".cube-side-right .mr"), $(cube).find(".cube-side-right .br")];
+            var bottomBottom = [$(cube).find(".cube-side-bottom .bl"), $(cube).find(".cube-side-bottom .bm"), $(cube).find(".cube-side-bottom .br")];
+            var leftLeft = [$(cube).find(".cube-side-left .tl"), $(cube).find(".cube-side-left .ml"), $(cube).find(".cube-side-left .bl")];
+
+                for(i = 0; i < 3; i++)
+                {
+                        var col1 = $(leftLeft[i]).css("background-color");
+                        var col2 = $(topTop[i]).css("background-color");
+                        var col3 = $(rightRight[i]).css("background-color");
+                        var col4 = $(bottomBottom[i]).css("background-color");
+
+                        $(topTop[i]).css({
+                             "background-color": col1
+                        });
+
+                        $(bottomBottom[i]).css({
+                            "background-color": col3
+                        });
+
+                        $(rightRight[i]).css({
+                             "background-color": col2
+                        });
+
+                        $(leftLeft[i]).css({
+                            "background-color": col4
+                        });
+                }
+        
+                var colorsForRotation = [];
+                for(var i = 0; i < 9; i++)
+                {
+                    colorsForRotation[i] = $(allBack[i]).css("background-color");
+                }
+                
+                for(var i = 0; i < allBack.length; i++)
+                {
+                    if(i % 2 == 0){
+                                                
+                        if(i == 8){
+                                $(allBack[i]).css("background-color", colorsForRotation[6]);
+                        }else if(i == 6)
+                        {
+                                $(allBack[i]).css("background-color", colorsForRotation[0]);
+                        }else if(i == 2)
+                        {
+                                $(allBack[i]).css("background-color", colorsForRotation[8]);
+                        }else if(i == 0)
+                        {
+                            $(allBack[i]).css("background-color", colorsForRotation[2]);
+                        }
+                    }else if(i % 2 != 0){
+                        if(i == 1){ 
+                            $(allBack[i]).css("background-color", colorsForRotation[5]);
+                        }else if(i == 3)
+                        {
+                            $(allBack[i]).css("background-color", colorsForRotation[1]);
+                        }else if(i == 5)
+                        {
+                            $(allBack[i]).css("background-color", colorsForRotation[7]);
+                        }else if(i == 7)
+                        {
+                            $(allFront[i]).css("background-color", colorsForRotation[3]);
+                        }
+                    }
+                }
+    }
+    
+    function turnUpRightSideLeftCol()
     {
             var allFront = [$(cube).find(".cube-side-front .cube-face")];
             var topBottom = [$(cube).find(".cube-side-top .bl"), $(cube).find(".cube-side-top .bm"), $(cube).find(".cube-side-top .br")];
@@ -1278,6 +1508,657 @@
                         }else if(i == 7)
                         {
                             $(allFront[i]).css("background-color", colorsForRotation[3]);
+                        }
+                    }
+                } 
+    }
+    
+    function turnDownRightSideLeftCol()
+    {
+            var allFront = [$(cube).find(".cube-side-front .cube-face")];
+            var topBottom = [$(cube).find(".cube-side-top .bl"), $(cube).find(".cube-side-top .bm"), $(cube).find(".cube-side-top .br")];
+            var rightLeft = [$(cube).find(".cube-side-right .tl"), $(cube).find(".cube-side-right .ml"), $(cube).find(".cube-side-right .bl")];
+            var bottomTop = [$(cube).find(".cube-side-bottom .tr"), $(cube).find(".cube-side-bottom .tm"), $(cube).find(".cube-side-bottom .tl")];
+            var leftRight = [$(cube).find(".cube-side-left .br"), $(cube).find(".cube-side-left .mr"), $(cube).find(".cube-side-left .tr")];
+
+                for(i = 0; i < 3; i++)
+                {
+                        var col1 = $(leftRight[i]).css("background-color");
+                        var col2 = $(topBottom[i]).css("background-color");
+                        var col3 = $(rightLeft[i]).css("background-color");
+                        var col4 = $(bottomTop[i]).css("background-color");
+
+                        $(topBottom[i]).css({
+                             "background-color": col1
+                        });
+
+                        $(bottomTop[i]).css({
+                            "background-color": col3
+                        });
+
+                        $(rightLeft[i]).css({
+                             "background-color": col2
+                        });
+
+                        $(leftRight[i]).css({
+                            "background-color": col4
+                        });
+                }
+        
+                var colorsForRotation = [];
+                for(var i = 0; i < 9; i++)
+                {
+                    colorsForRotation[i] = $(allFront[i]).css("background-color");
+                }
+                
+                for(var i = 0; i < allFront.length; i++)
+                {
+                    if(i % 2 == 0){
+                                                
+                        if(i == 8){
+                                $(allFront[i]).css("background-color", colorsForRotation[2]);
+                        }else if(i == 6)
+                        {
+                                $(allFront[i]).css("background-color", colorsForRotation[8]);
+                        }else if(i == 2)
+                        {
+                                $(allFront[i]).css("background-color", colorsForRotation[0]);
+                        }else if(i == 0)
+                        {
+                            $(allFront[i]).css("background-color", colorsForRotation[6]);
+                        }
+                    }else if(i % 2 != 0){
+                        if(i == 1){ 
+                            $(allFront[i]).css("background-color", colorsForRotation[3]);
+                        }else if(i == 3)
+                        {
+                            $(allFront[i]).css("background-color", colorsForRotation[7]);
+                        }else if(i == 5)
+                        {
+                            $(allFront[i]).css("background-color", colorsForRotation[1]);
+                        }else if(i == 7)
+                        {
+                            $(allFront[i]).css("background-color", colorsForRotation[5]);
+                        }
+                    }
+                }
+    }
+    
+    function turnUpRightSideRightCol()
+    {
+            var allBack = [$(cube).find(".cube-side-back .cube-face")];
+            var topTop = [$(cube).find(".cube-side-top .tl"), $(cube).find(".cube-side-top .tm"), $(cube).find(".cube-side-top .tr")];
+            var rightRight = [$(cube).find(".cube-side-right .tr"), $(cube).find(".cube-side-right .mr"), $(cube).find(".cube-side-right .br")];
+            var bottomBottom = [$(cube).find(".cube-side-bottom .bl"), $(cube).find(".cube-side-bottom .bm"), $(cube).find(".cube-side-bottom .br")];
+            var leftLeft = [$(cube).find(".cube-side-left .tl"), $(cube).find(".cube-side-left .ml"), $(cube).find(".cube-side-left .bl")];
+
+                for(i = 0; i < 3; i++)
+                {
+                        var col1 = $(leftLeft[i]).css("background-color");
+                        var col2 = $(topTop[i]).css("background-color");
+                        var col3 = $(rightRight[i]).css("background-color");
+                        var col4 = $(bottomBottom[i]).css("background-color");
+
+                        $(topTop[i]).css({
+                             "background-color": col3
+                        });
+
+                        $(bottomBottom[i]).css({
+                            "background-color": col1
+                        });
+
+                        $(rightRight[i]).css({
+                             "background-color": col4
+                        });
+
+                        $(leftLeft[i]).css({
+                            "background-color": col2
+                        });
+                }
+        
+                var colorsForRotation = [];
+                for(var i = 0; i < 9; i++)
+                {
+                    colorsForRotation[i] = $(allBack[i]).css("background-color");
+                }
+                
+                for(var i = 0; i < allBack.length; i++)
+                {
+                    if(i % 2 == 0){
+                                                
+                        if(i == 8){
+                                $(allBack[i]).css("background-color", colorsForRotation[2]);
+                        }else if(i == 6)
+                        {
+                                $(allBack[i]).css("background-color", colorsForRotation[8]);
+                        }else if(i == 2)
+                        {
+                                $(allBack[i]).css("background-color", colorsForRotation[0]);
+                        }else if(i == 0)
+                        {
+                            $(allBack[i]).css("background-color", colorsForRotation[6]);
+                        }
+                    }else if(i % 2 != 0){
+                        if(i == 1){ 
+                            $(allBack[i]).css("background-color", colorsForRotation[3]);
+                        }else if(i == 3)
+                        {
+                            $(allBack[i]).css("background-color", colorsForRotation[7]);
+                        }else if(i == 5)
+                        {
+                            $(allBack[i]).css("background-color", colorsForRotation[1]);
+                        }else if(i == 7)
+                        {
+                            $(allFront[i]).css("background-color", colorsForRotation[5]);
+                        }
+                    }
+                }
+    }
+    
+    function turnDownRightSideRightCol()
+    {
+            var allBack = [$(cube).find(".cube-side-back .cube-face")];
+            var topTop = [$(cube).find(".cube-side-top .tl"), $(cube).find(".cube-side-top .tm"), $(cube).find(".cube-side-top .tr")];
+            var rightRight = [$(cube).find(".cube-side-right .tr"), $(cube).find(".cube-side-right .mr"), $(cube).find(".cube-side-right .br")];
+            var bottomBottom = [$(cube).find(".cube-side-bottom .bl"), $(cube).find(".cube-side-bottom .bm"), $(cube).find(".cube-side-bottom .br")];
+            var leftLeft = [$(cube).find(".cube-side-left .tl"), $(cube).find(".cube-side-left .ml"), $(cube).find(".cube-side-left .bl")];
+
+                for(i = 0; i < 3; i++)
+                {
+                        var col1 = $(leftLeft[i]).css("background-color");
+                        var col2 = $(topTop[i]).css("background-color");
+                        var col3 = $(rightRight[i]).css("background-color");
+                        var col4 = $(bottomBottom[i]).css("background-color");
+
+                        $(topTop[i]).css({
+                             "background-color": col1
+                        });
+
+                        $(bottomBottom[i]).css({
+                            "background-color": col3
+                        });
+
+                        $(rightRight[i]).css({
+                             "background-color": col2
+                        });
+
+                        $(leftLeft[i]).css({
+                            "background-color": col4
+                        });
+                }
+        
+                var colorsForRotation = [];
+                for(var i = 0; i < 9; i++)
+                {
+                    colorsForRotation[i] = $(allBack[i]).css("background-color");
+                }
+                
+                for(var i = 0; i < allBack.length; i++)
+                {
+                    if(i % 2 == 0){
+                                                
+                        if(i == 8){
+                                $(allBack[i]).css("background-color", colorsForRotation[6]);
+                        }else if(i == 6)
+                        {
+                                $(allBack[i]).css("background-color", colorsForRotation[0]);
+                        }else if(i == 2)
+                        {
+                                $(allBack[i]).css("background-color", colorsForRotation[8]);
+                        }else if(i == 0)
+                        {
+                            $(allBack[i]).css("background-color", colorsForRotation[2]);
+                        }
+                    }else if(i % 2 != 0){
+                        if(i == 1){ 
+                            $(allBack[i]).css("background-color", colorsForRotation[5]);
+                        }else if(i == 3)
+                        {
+                            $(allBack[i]).css("background-color", colorsForRotation[1]);
+                        }else if(i == 5)
+                        {
+                            $(allBack[i]).css("background-color", colorsForRotation[7]);
+                        }else if(i == 7)
+                        {
+                            $(allFront[i]).css("background-color", colorsForRotation[3]);
+                        }
+                    }
+                }
+    }
+    
+    function turnLeft()
+    {
+        if(currSide == "front" || currSide == "back" || currSide == "left" || currSide == "right"){
+            if(selectedPosition == "tl" || selectedPosition == "tm" || selectedPosition == "tr")
+            {
+                turnTopLeft();
+            }else if(selectedPosition == "ml" || selectedPosition == "mm" || selectedPosition == "ml")
+            {
+                turnMidLeft();
+            }else if(selectedPosition == "bl" || selectedPosition == "bm" || selectedPosition == "br")
+            {
+                turnBottomLeft();
+            }
+        }else if(currSide == "top" || currSide == "bottom")
+        {
+            if(currSide == "top")
+            {
+                if(selectedPosition == "tl" || selectedPosition == "tm" || selectedPosition == "tr")
+                {
+                    turnUpRightSideRightCol();
+                }else if(selectedPosition == "ml" || selectedPosition == "mm" || selectedPosition == "ml")
+                {
+                    turnRightBottomMid();
+                }else if(selectedPosition == "bl" || selectedPosition == "bm" || selectedPosition == "br")
+                {
+                    turnUpRightSideLeftCol();
+                }
+            }
+            
+            if(currSide == "bottom")
+            {
+                if(selectedPosition == "tl" || selectedPosition == "tm" || selectedPosition == "tr")
+                {
+                    turnDownRightSideLeftCol();
+                }else if(selectedPosition == "ml" || selectedPosition == "mm" || selectedPosition == "ml")
+                {
+                    turnLeftBottomMid();
+                }else if(selectedPosition == "bl" || selectedPosition == "bm" || selectedPosition == "br")
+                {
+                    turnDownRightSideRightCol();
+                }
+            }
+        }
+    }
+    
+    function turnRight()
+    {
+        if(currSide == "front" || currSide == "back" || currSide == "left" || currSide == "right"){
+            if(selectedPosition == "tl" || selectedPosition == "tm" || selectedPosition == "tr")
+            {
+                turnTopRight();
+            }else if(selectedPosition == "ml" || selectedPosition == "mm" || selectedPosition == "ml")
+            {
+                turnMidRight();
+            }else if(selectedPosition == "bl" || selectedPosition == "bm" || selectedPosition == "br")
+            {
+                turnBottomRight();
+            }
+        }else if(currSide == "top" || currSide == "bottom")
+        {
+            if(currSide == "top")
+            {
+                if(selectedPosition == "tl" || selectedPosition == "tm" || selectedPosition == "tr")
+                {
+                    turnUpLeftSideLeftCol();
+                }else if(selectedPosition == "ml" || selectedPosition == "mm" || selectedPosition == "ml")
+                {
+                    turnRightTopMid();
+                }else if(selectedPosition == "bl" || selectedPosition == "bm" || selectedPosition == "br")
+                {
+                    turnUpLeftSideRightCol();
+                }
+            }
+            
+            if(currSide == "bottom")
+            {
+                if(selectedPosition == "tl" || selectedPosition == "tm" || selectedPosition == "tr")
+                {
+                    turnDownLeftSideRightCol();
+                }else if(selectedPosition == "ml" || selectedPosition == "mm" || selectedPosition == "ml")
+                {
+                    turnRightBottomMid();
+                }else if(selectedPosition == "bl" || selectedPosition == "bm" || selectedPosition == "br")
+                {
+                    turnDownLeftSideLeftCol();
+                }
+            }
+        }
+    }
+    
+    function turnTopRight()
+    {
+        var allTop = [$(cube).find(".cube-side-top .cube-face")];
+        var frontTop = [$(cube).find(".cube-side-front .tl"), $(cube).find(".cube-side-front .tm"), $(cube).find(".cube-side-front .tr")];
+        var leftTop = [$(cube).find(".cube-side-left .tl"), $(cube).find(".cube-side-left .tm"), $(cube).find(".cube-side-left .tr")];
+        var backTop = [$(cube).find(".cube-side-back .tl"), $(cube).find(".cube-side-back .tm"), $(cube).find(".cube-side-back .tr")];
+        var rightTop = [$(cube).find(".cube-side-right .tl"), $(cube).find(".cube-side-right .tm"), $(cube).find(".cube-side-right .tr")];
+
+        for(i = 0; i < 3; i++)
+        {
+                var col1 = $(frontTop[i]).css("background-color");
+                var col2 = $(leftTop[i]).css("background-color");
+                var col3 = $(backTop[i]).css("background-color");
+                var col4 = $(rightTop[i]).css("background-color");
+
+                $(frontTop[i]).css({
+                     "background-color": col2
+                });
+
+                $(leftTop[i]).css({
+                    "background-color": col3
+                });
+
+                $(backTop[i]).css({
+                     "background-color": col4
+                });
+
+                $(rightTop[i]).css({
+                    "background-color": col1
+                });
+        }
+
+        var colorsForRotation = [];
+        for(var i = 0; i < 9; i++)
+        {
+            colorsForRotation[i] = $(allTop[i]).css("background-color");
+        }
+
+        for(var i = 0; i < allTop.length; i++)
+        {
+            if(i % 2 == 0){
+
+                if(i == 8){
+                        $(allTop[i]).css("background-color", colorsForRotation[6]);
+                }else if(i == 6)
+                {
+                        $(allTop[i]).css("background-color", colorsForRotation[0]);
+                }else if(i == 2)
+                {
+                        $(allTop[i]).css("background-color", colorsForRotation[8]);
+                }else if(i == 0)
+                {
+                    $(allTop[i]).css("background-color", colorsForRotation[2]);
+                }
+            }else if(i % 2 != 0){
+                if(i == 1){ 
+                    $(allTop[i]).css("background-color", colorsForRotation[5]);
+                }else if(i == 3)
+                {
+                    $(allTop[i]).css("background-color", colorsForRotation[1]);
+                }else if(i == 5)
+                {
+                    $(allTop[i]).css("background-color", colorsForRotation[7]);
+                }else if(i == 7)
+                {
+                    $(allTop[i]).css("background-color", colorsForRotation[3]);
+                }
+            }
+        }
+    }
+    
+    function turnTopLeft()
+    {
+        var allTop = [$(cube).find(".cube-side-top .cube-face")];
+        var frontTop = [$(cube).find(".cube-side-front .tl"), $(cube).find(".cube-side-front .tm"), $(cube).find(".cube-side-front .tr")];
+        var leftTop = [$(cube).find(".cube-side-left .tl"), $(cube).find(".cube-side-left .tm"), $(cube).find(".cube-side-left .tr")];
+        var backTop = [$(cube).find(".cube-side-back .tl"), $(cube).find(".cube-side-back .tm"), $(cube).find(".cube-side-back .tr")];
+        var rightTop = [$(cube).find(".cube-side-right .tl"), $(cube).find(".cube-side-right .tm"), $(cube).find(".cube-side-right .tr")];
+        
+        for(i = 0; i < 3; i++)
+        {
+                var col1 = $(frontTop[i]).css("background-color");
+                var col2 = $(leftTop[i]).css("background-color");
+                var col3 = $(backTop[i]).css("background-color");
+                var col4 = $(rightTop[i]).css("background-color");
+
+                $(frontTop[i]).css({
+                     "background-color": col4
+                });
+
+                $(leftTop[i]).css({
+                    "background-color": col1
+                });
+
+                $(backTop[i]).css({
+                     "background-color": col2
+                });
+
+                $(rightTop[i]).css({
+                    "background-color": col3
+                });
+        }
+        
+                var colorsForRotation = [];
+                for(var i = 0; i < 9; i++)
+                {
+                    colorsForRotation[i] = $(allTop[i]).css("background-color");
+                }
+                
+                for(var i = 0; i < allTop.length; i++)
+                {
+                    if(i % 2 == 0){
+                                                
+                        if(i == 8){
+                                $(allTop[i]).css("background-color", colorsForRotation[2]);
+                        }else if(i == 6)
+                        {
+                                $(allTop[i]).css("background-color", colorsForRotation[8]);
+                        }else if(i == 2)
+                        {
+                                $(allTop[i]).css("background-color", colorsForRotation[0]);
+                        }else if(i == 0)
+                        {
+                            $(allTop[i]).css("background-color", colorsForRotation[6]);
+                        }
+                    }else if(i % 2 != 0){
+                        if(i == 1){ 
+                            $(allTop[i]).css("background-color", colorsForRotation[3]);
+                        }else if(i == 3)
+                        {
+                            $(allTop[i]).css("background-color", colorsForRotation[7]);
+                        }else if(i == 5)
+                        {
+                            $(allTop[i]).css("background-color", colorsForRotation[1]);
+                        }else if(i == 7)
+                        {
+                            $(allTop[i]).css("background-color", colorsForRotation[5]);
+                        }
+                    }
+                }
+    }
+    
+    function turnMidLeft()
+    {
+        var frontMid = [$(cube).find(".cube-side-front .ml"), $(cube).find(".cube-side-front .mm"), $(cube).find(".cube-side-front .mr")];
+        var leftMid = [$(cube).find(".cube-side-left .ml"), $(cube).find(".cube-side-left .mm"), $(cube).find(".cube-side-left .mr")];
+        var backMid = [$(cube).find(".cube-side-back .ml"), $(cube).find(".cube-side-back .mm"), $(cube).find(".cube-side-back .mr")];
+        var rightMid = [$(cube).find(".cube-side-right .ml"), $(cube).find(".cube-side-right .mm"), $(cube).find(".cube-side-right .mr")];
+        
+        for(i = 0; i < 3; i++)
+        {
+                var col1 = $(frontMid[i]).css("background-color");
+                var col2 = $(leftMid[i]).css("background-color");
+                var col3 = $(backMid[i]).css("background-color");
+                var col4 = $(rightMid[i]).css("background-color");
+
+                $(frontMid[i]).css({
+                     "background-color": col4
+                });
+
+                $(leftMid[i]).css({
+                    "background-color": col1
+                });
+
+                $(backMid[i]).css({
+                     "background-color": col2
+                });
+
+                $(rightMid[i]).css({
+                    "background-color": col3
+                });
+        }
+    }
+    
+    function turnMidRight()
+    {
+        var frontMid = [$(cube).find(".cube-side-front .ml"), $(cube).find(".cube-side-front .mm"), $(cube).find(".cube-side-front .mr")];
+        var leftMid = [$(cube).find(".cube-side-left .ml"), $(cube).find(".cube-side-left .mm"), $(cube).find(".cube-side-left .mr")];
+        var backMid = [$(cube).find(".cube-side-back .ml"), $(cube).find(".cube-side-back .mm"), $(cube).find(".cube-side-back .mr")];
+        var rightMid = [$(cube).find(".cube-side-right .ml"), $(cube).find(".cube-side-right .mm"), $(cube).find(".cube-side-right .mr")];
+        
+        for(i = 0; i < 3; i++)
+        {
+                var col1 = $(frontMid[i]).css("background-color");
+                var col2 = $(leftMid[i]).css("background-color");
+                var col3 = $(backMid[i]).css("background-color");
+                var col4 = $(rightMid[i]).css("background-color");
+
+                $(frontMid[i]).css({
+                     "background-color": col2
+                });
+
+                $(leftMid[i]).css({
+                    "background-color": col3
+                });
+
+                $(backMid[i]).css({
+                     "background-color": col4
+                });
+
+                $(rightMid[i]).css({
+                    "background-color": col1
+                });
+        }
+    }
+    
+    function turnBottomLeft()
+    {
+        var allBottom = [$(cube).find(".cube-side-bottom .cube-face")];
+        var frontBottom = [$(cube).find(".cube-side-front .bl"), $(cube).find(".cube-side-front .bm"), $(cube).find(".cube-side-front .br")];
+        var leftBottom = [$(cube).find(".cube-side-left .bl"), $(cube).find(".cube-side-left .bm"), $(cube).find(".cube-side-left .br")];
+        var backBottom = [$(cube).find(".cube-side-back .bl"), $(cube).find(".cube-side-back .bm"), $(cube).find(".cube-side-back .br")];
+        var rightBottom = [$(cube).find(".cube-side-right .bl"), $(cube).find(".cube-side-right .bm"), $(cube).find(".cube-side-right .br")];
+        
+            for(i = 0; i < 3; i++)
+            {
+                    var col1 = $(frontBottom[i]).css("background-color");
+                    var col2 = $(leftBottom[i]).css("background-color");
+                    var col3 = $(backBottom[i]).css("background-color");
+                    var col4 = $(rightBottom[i]).css("background-color");
+
+                    $(frontBottom[i]).css({
+                         "background-color": col4
+                    });
+
+                    $(leftBottom[i]).css({
+                        "background-color": col1
+                    });
+
+                    $(backBottom[i]).css({
+                         "background-color": col2
+                    });
+
+                    $(rightBottom[i]).css({
+                        "background-color": col3
+                    });
+            }
+        
+            var colorsForRotation = [];
+            for(var i = 0; i < 9; i++)
+            {
+                colorsForRotation[i] = $(allBottom[i]).css("background-color");
+            }
+
+            for(var i = 0; i < allTop.length; i++)
+            {
+                if(i % 2 == 0){
+
+                    if(i == 8){
+                            $(allBottom[i]).css("background-color", colorsForRotation[6]);
+                    }else if(i == 6)
+                    {
+                            $(allBottom[i]).css("background-color", colorsForRotation[0]);
+                    }else if(i == 2)
+                    {
+                            $(allBottom[i]).css("background-color", colorsForRotation[8]);
+                    }else if(i == 0)
+                    {
+                        $(allBottom[i]).css("background-color", colorsForRotation[2]);
+                    }
+                }else if(i % 2 != 0){
+                    if(i == 1){ 
+                        $(allBottom[i]).css("background-color", colorsForRotation[5]);
+                    }else if(i == 3)
+                    {
+                        $(allBottom[i]).css("background-color", colorsForRotation[1]);
+                    }else if(i == 5)
+                    {
+                        $(allBottom[i]).css("background-color", colorsForRotation[7]);
+                    }else if(i == 7)
+                    {
+                        $(allBottom[i]).css("background-color", colorsForRotation[3]);
+                    }
+                }
+            }
+    }
+    
+    function turnBottomRight()
+    {
+        var allBottom = [$(cube).find(".cube-side-bottom .cube-face")];
+        var frontBottom = [$(cube).find(".cube-side-front .bl"), $(cube).find(".cube-side-front .bm"), $(cube).find(".cube-side-front .br")];
+        var leftBottom = [$(cube).find(".cube-side-left .bl"), $(cube).find(".cube-side-left .bm"), $(cube).find(".cube-side-left .br")];
+        var backBottom = [$(cube).find(".cube-side-back .bl"), $(cube).find(".cube-side-back .bm"), $(cube).find(".cube-side-back .br")];
+        var rightBottom = [$(cube).find(".cube-side-right .bl"), $(cube).find(".cube-side-right .bm"), $(cube).find(".cube-side-right .br")];
+
+        for(i = 0; i < 3; i++)
+        {
+                var col1 = $(frontBottom[i]).css("background-color");
+                var col2 = $(leftBottom[i]).css("background-color");
+                var col3 = $(backBottom[i]).css("background-color");
+                var col4 = $(rightBottom[i]).css("background-color");
+
+                $(frontBottom[i]).css({
+                     "background-color": col2
+                });
+
+                $(leftBottom[i]).css({
+                    "background-color": col3
+                });
+
+                $(backBottom[i]).css({
+                     "background-color": col4
+                });
+
+                $(rightBottom[i]).css({
+                    "background-color": col1
+                });
+        }
+        
+                var colorsForRotation = [];
+                for(var i = 0; i < 9; i++)
+                {
+                    colorsForRotation[i] = $(allBottom[i]).css("background-color");
+                }
+                
+                for(var i = 0; i < allTop.length; i++)
+                {
+                    if(i % 2 == 0){
+                                                
+                        if(i == 8){
+                                $(allBottom[i]).css("background-color", colorsForRotation[2]);
+                        }else if(i == 6)
+                        {
+                                $(allBottom[i]).css("background-color", colorsForRotation[8]);
+                        }else if(i == 2)
+                        {
+                                $(allBottom[i]).css("background-color", colorsForRotation[0]);
+                        }else if(i == 0)
+                        {
+                            $(allBottom[i]).css("background-color", colorsForRotation[6]);
+                        }
+                    }else if(i % 2 != 0){
+                        if(i == 1){ 
+                            $(allBottom[i]).css("background-color", colorsForRotation[3]);
+                        }else if(i == 3)
+                        {
+                            $(allBottom[i]).css("background-color", colorsForRotation[7]);
+                        }else if(i == 5)
+                        {
+                            $(allBottom[i]).css("background-color", colorsForRotation[1]);
+                        }else if(i == 7)
+                        {
+                            $(allBottom[i]).css("background-color", colorsForRotation[5]);
                         }
                     }
                 }
