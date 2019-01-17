@@ -409,6 +409,9 @@
             turnUpLeftSideLeftCol();
         } else if ((selectedPosition == "bl" || selectedPosition == "ml" || selectedPosition == "tl") && currSide == "right") {
             turnUpRightSideLeftCol();
+        } else if ((selectedPosition == "bl" || selectedPosition == "ml" || selectedPosition == "tl") && currSide == "top")
+        {
+            turnUpLeft();
         }
 
         console.log(checkWin());
@@ -620,7 +623,7 @@
         }
     }
 
-    function turnDownLeft() {
+    function turnDownFrontLeft() {
         var frontLeft = [$(cube).find(".cube-side-front .tl"), $(cube).find(".cube-side-front .ml"), $(cube).find(".cube-side-front .bl")];
         var topLeft = [$(cube).find(".cube-side-top .tl"), $(cube).find(".cube-side-top .ml"), $(cube).find(".cube-side-top .bl")];
         var backRight = [$(cube).find(".cube-side-back .tr"), $(cube).find(".cube-side-back .mr"), $(cube).find(".cube-side-back .br")];
@@ -635,19 +638,19 @@
                 var col4 = $(backRight[i]).css("background-color");
 
                 $(frontLeft[i]).css({
-                    "background-color": col3
-                });
-
-                $(topLeft[i]).css({
-                    "background-color": col1
-                });
-
-                $(backRight[i]).css({
                     "background-color": col2
                 });
 
-                $(bottomLeft[i]).css({
+                $(topLeft[i]).css({
                     "background-color": col4
+                });
+
+                $(backRight[i]).css({
+                    "background-color": col3
+                });
+
+                $(bottomLeft[i]).css({
+                    "background-color": col1
                 });
             }
 
@@ -868,15 +871,21 @@
             turnDownMiddle();
         } else if (((selectedPosition == "br" || selectedPosition == "mr" || selectedPosition == "tr") && currSide != "back") || ((selectedPosition == "bl" || selectedPosition == "ml" || selectedPosition == "tl") && currSide == "back")) {
             turnDownRight();
-        } else if ((selectedPosition == "bl" || selectedPosition == "ml" || selectedPosition == "tl") && currSide == "back" || ((selectedPosition == "tr" || selectedPosition == "mr" || selectedPosition == "br") && currSide == "back")) {
-            turnDownLeft();
+        } else if ((selectedPosition == "bl" || selectedPosition == "ml" || selectedPosition == "tl") && currSide == "back") {
+            turnDownFrontLeft();
         } else if ((selectedPosition == "tl" || selectedPosition == "ml" || selectedPosition == "bl") && currSide == "left") {
             turnDownLeftSideLeftCol();
         } else if ((selectedPosition == "bl" || selectedPosition == "ml" || selectedPosition == "tl") && currSide == "right") {
             turnDownRightSideLeftCol();
+        } else if ((selectedPosition == "tl" || selectedPosition == "ml" || selectedPosition == "bl") && (currSide == "" || currSide == "front")) {
+            turnDownFrontLeft();
+        } else if ((selectedPosition == "tr" || selectedPosition == "mr" || selectedPosition == "br") && currSide == "back") {
+            turnUpLeft();
+        } else if ((selectedPosition == "tl" || selectedPosition == "ml" || selectedPosition == "bl") && currSide == "top")
+        {
+            turnDownFrontLeft();
         }
-
-        console.log(checkWin());
+            checkWin();
     }
 
     function turnUpMiddle() {
@@ -934,7 +943,7 @@
                     "background-color": col4
                 });
             }
-        } else if (currSide == "left" || currSide == "right") {
+        } else if (currSide == "left") {
             topMiddle = [$(cube).find(".cube-side-top .ml"), $(cube).find(".cube-side-top .mm"), $(cube).find(".cube-side-top .mr")];
             bottomMiddle = [$(cube).find(".cube-side-bottom .ml"), $(cube).find(".cube-side-bottom .mm"), $(cube).find(".cube-side-bottom .mr")];
 
@@ -958,6 +967,30 @@
 
                 $(rightMiddle[i]).css({
                     "background-color": col2
+                });
+            }
+        } else if (currSide == "right")
+        {
+            for (i = 0; i < 3; i++) {
+                var col1 = $(leftMiddle[i]).css("background-color");
+                var col2 = $(topMiddle[i]).css("background-color");
+                var col3 = $(rightMiddle[i]).css("background-color");
+                var col4 = $(bottomMiddle[i]).css("background-color");
+
+                $(topMiddle[i]).css({
+                    "background-color": col3
+                });
+
+                $(leftMiddle[i]).css({
+                    "background-color": col2
+                });
+
+                $(bottomMiddle[i]).css({
+                    "background-color": col1
+                });
+
+                $(rightMiddle[i]).css({
+                    "background-color": col4
                 });
             }
         }
@@ -1122,22 +1155,40 @@
                 var col2 = $(topMiddle[i]).css("background-color");
                 var col3 = $(rightMiddle[i]).css("background-color");
                 var col4 = $(bottomMiddle[i]).css("background-color");
+                if (currSide == "left") {
+                    $(topMiddle[i]).css({
+                        "background-color": col3
+                    });
 
-                $(topMiddle[i]).css({
-                    "background-color": col3
-                });
+                    $(leftMiddle[i]).css({
+                        "background-color": col2
+                    });
 
-                $(leftMiddle[i]).css({
-                    "background-color": col2
-                });
+                    $(bottomMiddle[i]).css({
+                        "background-color": col1
+                    });
 
-                $(bottomMiddle[i]).css({
-                    "background-color": col1
-                });
+                    $(rightMiddle[i]).css({
+                        "background-color": col4
+                    });
+                } else if (currSide == "right")
+                {
+                    $(topMiddle[i]).css({
+                        "background-color": col1
+                    });
 
-                $(rightMiddle[i]).css({
-                    "background-color": col4
-                });
+                    $(leftMiddle[i]).css({
+                        "background-color": col4
+                    });
+
+                    $(bottomMiddle[i]).css({
+                        "background-color": col3
+                    });
+
+                    $(rightMiddle[i]).css({
+                        "background-color": col2
+                    });
+                }
             }
         }
     }
@@ -1652,7 +1703,7 @@
 
             if (currSide == "bottom") {
                 if (selectedPosition == "tl" || selectedPosition == "tm" || selectedPosition == "tr") {
-                    turnDownRightSideLeftCol();
+                    turnUpLeftSideRightCol();
                 } else if (selectedPosition == "ml" || selectedPosition == "mm" || selectedPosition == "ml") {
                     turnLeftBottomMid();
                 } else if (selectedPosition == "bl" || selectedPosition == "bm" || selectedPosition == "br") {
@@ -1687,7 +1738,7 @@
             if (currSide == "bottom") {
                 if (selectedPosition == "tl" || selectedPosition == "tm" || selectedPosition == "tr") {
                     turnDownLeftSideRightCol();
-                } else if (selectedPosition == "ml" || selectedPosition == "mm" || selectedPosition == "ml") {
+                } else if (selectedPosition == "ml" || selectedPosition == "mm" || selectedPosition == "mr") {
                     turnRightBottomMid();
                 } else if (selectedPosition == "bl" || selectedPosition == "bm" || selectedPosition == "br") {
                     turnDownLeftSideLeftCol();
