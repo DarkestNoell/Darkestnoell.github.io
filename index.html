@@ -170,13 +170,13 @@
         transform: translateZ(-100px) rotateY(30deg);
         transition: transform 1s;
         -webkit-transform-style: preserve-3d;
-        -webkit-backface-visibility: hidden;
     }
 
     [class^="cube-side"] {
         position: absolute;
         height: 100%;
         width: 100%;
+        -webkit-transform-style: preserve-3d;
     }
 
 
@@ -184,6 +184,7 @@
         position: absolute;
         height: 33%;
         width: 33%;
+        -webkit-transform-style: preserve-3d;
     }
 
     .cube-front,
@@ -257,11 +258,11 @@
     }
 
     .cube-side-right {
-        transform: rotateY(90deg) translateZ(100px) translateX(100px);
+        transform: rotateY(90deg) translateX(100px);
     }
 
     .cube-side-back {
-        transform: rotateY(180deg) translateZ(200px);
+        transform: rotateY(180deg) translateZ(100px);
     }
 
     .cube-side-top {
@@ -270,6 +271,8 @@
 
     .cube-side-left {
         transform: rotateY(270deg) translateX(-100px) translateZ(100px);
+        -webkit-backface-visibility: hidden;
+        -webkit-transform: scale(1) rotateY(270deg) translateX(-100px);
     }
 
     .cube-side-bottom {
